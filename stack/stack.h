@@ -118,3 +118,12 @@ namespace FAST
         return _buffer[_size-1];
     }
 }
+#ifdef INLINE_STACK
+    #undef INLINE_STACK
+#endif
+#undef stack_attr
+#ifdef MANIPULATIVE_STACK
+    #undef MANIPULATIVE_STACK
+#endif
+
+
