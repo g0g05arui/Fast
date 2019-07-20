@@ -1,60 +1,40 @@
+
 #define MANIPULATIVE_STACK
 #define INLINE_STACK
+
+#ifdef INLINE_STACK
+    #define stack_attr inline
+#else
+    #define stack_attr
+#endif
+
 namespace FAST
 {
-
     template<typename T>
     class stack
     {
         T * _buffer;
         unsigned int _size,_multiplier,_capacity;
-        public:
-            stack();
-            stack(unsigned int);
-        #ifdef INLINE_STACK
-            inline
-        #endif
-            void pop();
-        #ifdef INLINE_STACK
-            inline
-        #endif
-            void push(const T &);
-        #ifdef INLINE_STACK
-            inline
-        #endif
-            const unsigned int size();
-        #ifdef INLINE_STACK
-            inline
-        #endif
-            const unsigned int capacity();
-        #ifdef INLINE_STACK
-            inline
-        #endif
-            bool empty();
-        #ifdef INLINE_STACK
-            inline
-        #endif
-            void set_multiplier(unsigned int);
-        #ifdef INLINE_STACK
-            inline
-        #endif
-            const unsigned int multiplier();
-        #ifdef INLINE_STACK
-            inline
-        #endif
-            T & top();
-        #ifdef MANIPULATIVE_STACK
-        #ifdef INLINE_STACK
-            inline
-        #endif
-            T & operator [](unsigned int);
-        #endif
+    public:
+        stack();
+        stack(unsigned int);
+       stack_attr void pop();
+       stack_attr void push(const T &);
+       stack_attr const unsigned int size();
+       stack_attr const unsigned int capacity();
+       stack_attr bool empty();
+       stack_attr void set_multiplier(unsigned int);
+       stack_attr const unsigned int multiplier();
+       stack_attr T & top();
+       #ifdef MANIPULATIVE_STACK
+       stack_attr T & operator [](unsigned int);
+       #endif
+
     };
 }
 
 namespace FAST
 {
-
     template<typename T>
     stack<T>::stack()
     {
@@ -72,20 +52,14 @@ namespace FAST
     }
 
     template<typename T>
-    #ifdef INLINE_STACK
-    inline
-    #endif
-    void stack<T>::pop()
+    stack_attr void stack<T>::pop()
     {
         if(_size>0)
             _size--;
     }
 
     template<typename T>
-    #ifdef INLINE_STACK
-    inline
-    #endif
-    void stack<T>::push(const T & aux)
+    stack_attr void stack<T>::push(const T & aux)
     {
         if(_size<_capacity)
             _buffer[_size++]=aux;
@@ -102,66 +76,44 @@ namespace FAST
     }
 
     template<typename T>
-    #ifdef INLINE_STACK
-    inline
-    #endif
-    void stack<T>::set_multiplier(unsigned int aux)
+    stack_attr void stack<T>::set_multiplier(unsigned int aux)
     {
         _multiplier=aux;
     }
 
     template<typename T>
-    #ifdef INLINE_STACK
-    inline
-    #endif
-    bool stack<T>::empty()
+    stack_attr bool stack<T>::empty()
     {
         return _size==0;
     }
 
     template<typename T>
-    #ifdef INLINE_STACK
-    inline
-    #endif
-    const unsigned int stack<T>::size()
+    stack_attr const unsigned int stack<T>::size()
     {
         return _size;
     }
 
     template<typename T>
-    #ifdef INLINE_STACK
-    inline
-    #endif
-    const unsigned int stack<T>::capacity()
+    stack_attr const unsigned int stack<T>::capacity()
     {
         return _capacity;
     }
 
     template<typename T>
-    #ifdef INLINE_STACK
-    inline
-    #endif
-    const unsigned int stack<T>::multiplier()
+    stack_attr const unsigned int stack<T>::multiplier()
     {
         return _multiplier;
     }
 
     #ifdef MANIPULATIVE_STACK
     template<typename T>
-    #ifdef INLINE_STACK
-    inline
-    #endif
-    T & stack<T>::operator [](unsigned int index)
+    stack_attr T & stack<T>::operator [](unsigned int index)
     {
         return _buffer[index];
     }
     #endif
-
     template<typename T>
-    #ifdef INLINE_STACK
-    inline
-    #endif
-    T & stack<T>::top()
+    stack_attr T & stack<T>::top()
     {
         return _buffer[_size-1];
     }
